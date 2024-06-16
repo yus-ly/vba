@@ -14,7 +14,7 @@ Sub WriteCellToTextFile()
     fileName = "seed_reserve_" fileName & ".txt"
 
     ' テキストファイルのパスを指定 (例: デスクトップに保存)
-    filePath = "\Desktop\" & $filename
+    filePath = Environ("USERPROFILE") & "\Documents" & $filename
     
     ' ファイル番号を取得
     fileNum = FreeFile
