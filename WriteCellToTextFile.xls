@@ -1,13 +1,21 @@
 Sub WriteCellToTextFile()
     ' 変数の宣言
-    Dim cellValue As String
+    Dim cell As Range
+　　Dim foundCell As Range
+    Dim nameValue As String
+    Dim ageValue As String
+    Dim workValue As String
     Dim fileName As String
     Dim filePath As String
     Dim fileNum As Integer
-　　Dim additionalText As String
     
-    ' 特定のセルのデータを取得 (例: A1セル)
-    cellValue = ThisWorkbook.Sheets("Sheet1").Range("A1").Value
+    ' ワークシートの指定
+    Set ws = ThisWorkbook.Sheets("Sheet1")
+
+    ' 各固定値に対応する値を取得
+    nameValue = GetCellValue(ws, "name")
+    ageValue = GetCellValue(ws, "age")
+    workValue = GetCellValue(ws, "work")
 
     ' ファイル名を特定のセルから取得 (例: B1セル)
     fileName = ThisWorkbook.Sheets("Sheet1").Range("B1").Value
@@ -23,12 +31,11 @@ Sub WriteCellToTextFile()
     
     ' テキストファイルを開く（書き込み用）
     Open filePath For Output As #fileNum
-
-　　' 他の文字列を追加して書き込む
-    additionalText = "SEED_FOLDER " & cellValue
     
-    ' セルのデータを書き込む
-    Print #fileNum, additionalText
+    ' データを書き込む
+    Print #fileNum, "Name " & nameValue
+    Print #fileNum, "Age " & ageValue
+    Print #fileNum, "Work " & workValue
     
     ' ファイルを閉じる
     Close #fileNum
@@ -36,3 +43,15 @@ Sub WriteCellToTextFile()
     ' 完了メッセージ
     MsgBox "データを書き込みました：" & filePath
 End Sub
+
+Function GetCellValue(ws As Worksheet, searchKey As String) As String
+    Dim foundCell As Range
+    ' 固定値を含むセルを検索
+    Set foundCell = ws.Cells.Find(What:=searchKey, LookIn:=xlValues, LookAt:=xlWhole, MatchCase:=False)
+    ' 値を取得し、右隣のセルの値を返す
+    If Not foundCell Is Nothing Then
+        GetCellValue = foundCell.Offset(0, 1).Value
+    Else
+        GetCellValue = "Not Found"
+    End If
+End Function
