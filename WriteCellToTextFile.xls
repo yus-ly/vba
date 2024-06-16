@@ -1,16 +1,25 @@
 Sub WriteCellToTextFile()
     ' 変数の宣言
-    Dim cell As Range
-　　Dim foundCell As Range
+    Dim ws As Worksheet
+    Dim wb As Workbook
     Dim nameValue As String
     Dim ageValue As String
     Dim workValue As String
     Dim fileName As String
     Dim filePath As String
     Dim fileNum As Integer
+    Dim otherWorkbookPath As String
+    Dim otherWorkbookName As String
+    Dim sheetName As String
     
-    ' ワークシートの指定
-    Set ws = ThisWorkbook.Sheets("Sheet1")
+    ' 他のブックのパスと名前を指定
+    otherWorkbookPath = "C:\Users\YourUsername\Documents\" ' 適宜パスを変更してください
+    otherWorkbookName = "test.xlsx" ' 適宜ファイル名を変更してください
+    sheetName = "test" ' 検索するシート名を指定
+
+    ' 他のブックを開く
+    Set wb = Workbooks.Open(otherWorkbookPath & otherWorkbookName)
+    Set ws = wb.Sheets(sheetName)
 
     ' 各固定値に対応する値を取得
     nameValue = GetCellValue(ws, "name")
@@ -39,6 +48,9 @@ Sub WriteCellToTextFile()
     
     ' ファイルを閉じる
     Close #fileNum
+
+    ' 他のブックを閉じる
+    wb.Close SaveChanges:=False
     
     ' 完了メッセージ
     MsgBox "データを書き込みました：" & filePath
