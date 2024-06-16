@@ -1,0 +1,27 @@
+Sub WriteCellToTextFile()
+    ' 変数の宣言
+    Dim cellValue As String
+    Dim filePath As String
+    Dim fileNum As Integer
+    
+    ' 特定のセルのデータを取得 (例: A1セル)
+    cellValue = ThisWorkbook.Sheets("Sheet1").Range("A1").Value
+    
+    ' テキストファイルのパスを指定 (例: デスクトップに保存)
+    filePath = Environ("USERPROFILE") & "\Desktop\output.txt"
+    
+    ' ファイル番号を取得
+    fileNum = FreeFile
+    
+    ' テキストファイルを開く（書き込み用）
+    Open filePath For Output As #fileNum
+    
+    ' セルのデータを書き込む
+    Print #fileNum, cellValue
+    
+    ' ファイルを閉じる
+    Close #fileNum
+    
+    ' 完了メッセージ
+    MsgBox "データを書き込みました：" & filePath
+End Sub
