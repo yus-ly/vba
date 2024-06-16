@@ -1,20 +1,21 @@
 Sub WriteCellToTextFile()
     ' 変数の宣言
     Dim cellValue As String
+    Dim fileName As String
     Dim filePath As String
     Dim fileNum As Integer
     
     ' 特定のセルのデータを取得 (例: A1セル)
     cellValue = ThisWorkbook.Sheets("Sheet1").Range("A1").Value
 
-　　' ファイル名を特定のセルから取得 (例: B1セル)
+    ' ファイル名を特定のセルから取得 (例: B1セル)
     fileName = ThisWorkbook.Sheets("Sheet1").Range("B1").Value
 
-　　' ファイル名に拡張子を追加（例: .txt）
-    fileName = "seed_reserve_" fileName & ".txt"
+    ' ファイル名に拡張子を追加（例: .txt）
+    fileName = "seed_reserve_" & fileName & ".txt"
 
     ' テキストファイルのパスを指定 (例: デスクトップに保存)
-    filePath = Environ("USERPROFILE") & "\Documents" & $filename
+    filePath = Environ("USERPROFILE") & "\Documents\" & fileName
     
     ' ファイル番号を取得
     fileNum = FreeFile
