@@ -6,9 +6,10 @@ Sub WriteCellToTextFile()
     
     ' 特定のセルのデータを取得 (例: A1セル)
     cellValue = ThisWorkbook.Sheets("Sheet1").Range("A1").Value
-    
+
+
     ' テキストファイルのパスを指定 (例: デスクトップに保存)
-    filePath = Environ("USERPROFILE") & "\Desktop\output.txt"
+    filePath = "\Desktop\seed_reserver_" & ".txt"
     
     ' ファイル番号を取得
     fileNum = FreeFile
