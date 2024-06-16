@@ -4,6 +4,7 @@ Sub WriteCellToTextFile()
     Dim fileName As String
     Dim filePath As String
     Dim fileNum As Integer
+　　Dim additionalText As String
     
     ' 特定のセルのデータを取得 (例: A1セル)
     cellValue = ThisWorkbook.Sheets("Sheet1").Range("A1").Value
@@ -22,9 +23,12 @@ Sub WriteCellToTextFile()
     
     ' テキストファイルを開く（書き込み用）
     Open filePath For Output As #fileNum
+
+　　' 他の文字列を追加して書き込む
+    additionalText = "SEED_FOLDER " & cellValue
     
     ' セルのデータを書き込む
-    Print #fileNum, cellValue
+    Print #fileNum, additionalText
     
     ' ファイルを閉じる
     Close #fileNum
