@@ -1,0 +1,42 @@
+Sub ExtractDataByDate()
+    Dim ws As Worksheet
+    Dim newWs As Worksheet
+    Dim wb As Workbook
+    Dim newWb As Workbook
+    Dim lastRow As Long
+    Dim i As Long
+    Dim startDate As Date
+    Dim endDate As Date
+    
+    ' 日付の範囲を設定（必要に応じて変更してください）
+    startDate = DateValue("2024-01-01")
+    endDate = DateValue("2024-12-31")
+    
+    ' データが含まれているシートを設定
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 必要に応じてシート名を変更
+    
+    ' 新しいブックを作成
+    Set newWb = Workbooks.Add
+    Set newWs = newWb.Sheets(1)
+    
+    ' 見出しをコピー
+    ws.Rows(1).Copy Destination:=newWs.Rows(1)
+    
+    ' データの最終行を取得
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' 日付範囲に基づいてデータをコピー
+    Dim destRow As Long
+    destRow = 2 ' コピー先の開始行
+    
+    For i = 2 To lastRow
+        If ws.Cells(i, 1).Value >= startDate And ws.Cells(i, 1).Value <= endDate Then
+            ws.Rows(i).Copy Destination:=newWs.Rows(destRow)
+            destRow = destRow + 1
+        End If
+    Next i
+    
+    ' 新しいファイルを保存（必要に応じてパスとファイル名を変更）
+    newWb.SaveAs "C:\path\to\your\folder\ExtractedData.xlsx"
+    newWb.Close
+End Sub
